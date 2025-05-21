@@ -12,7 +12,7 @@ namespace NewSuperMarket.Controllers
         {
             productService = new ProductService();
         }
-        public IActionResult Index()
+        public IActionResult Index(string? message = null, string? messageType = null)
         {
             ProductListDto productListDto = productService.GetAll();
 
@@ -40,6 +40,9 @@ namespace NewSuperMarket.Controllers
                     Type = s.Type
                 }).ToList()
             };
+
+            ViewBag.Message = message;
+            ViewBag.MessageType = messageType;
             return View(productListModel);
         }
 
@@ -51,18 +54,25 @@ namespace NewSuperMarket.Controllers
         [HttpPost]
         public IActionResult AddProduct(AddProductViewModel product)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return View();
+                if (!ModelState.IsValid)
+                {
+                    return View();
+                }
+                productService.AddProduct(new ProductDto()
+                {
+                    Name = product.Name,
+                    Price = product.Price,
+                    Descripcion = product.Descripcion,
+                    Type = product.Type
+                });
+                return RedirectToRoute(new { controller = "Market", action = "Index", message = "Producto creado correctamente", messageType = "success" });
             }
-            productService.AddProduct(new ProductDto()
+            catch
             {
-                Name = product.Name,
-                Price = product.Price,
-                Descripcion = product.Descripcion,
-                Type = product.Type
-            });
-            return RedirectToRoute(new {controller="Market", action="Index"});
+                return RedirectToRoute(new { controller = "Market", action = "Index", message = "Error creando el producto", messageType="alert"});
+            }
         }
     }
 }

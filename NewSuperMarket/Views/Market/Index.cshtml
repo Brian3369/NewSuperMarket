@@ -3,6 +3,14 @@
 @{
     ViewData["Title"] = "Market";
 }
+@if (!string.IsNullOrWhiteSpace(ViewBag.Message))
+{
+    <div class="alert alert-@ViewBag.MessageType alert-dismissible fade show" role="alert">
+        @ViewBag.Message
+        <button type="button" class="btn-close" data-bs-dismiss="alert" arial-label="Close"></button>
+    </div>
+}
+
 <div>
     <h1 class="text-center">Product list</h1>
 </div>
