@@ -18,22 +18,25 @@
                     <div class="mb-3">
                         <label asp-for="Name" class="form-label">Name</label>
                         <input asp-for="Name" class="form-control"/>
+                        <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label asp-for="Price" class="form-label">Price</label>
                         <input asp-for="Price" type="number" class="form-control"/>
+                        <span asp-validation-for="Price" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label asp-for="Descripcion" class="form-label">Descripcion</label>
                         <textarea asp-for="Descripcion" class="form-control"></textarea>
                     </div>
                     <div class="mb-3">
-                        <label asp-for="Type" class="form-label">Descripcion</label>
+                        <label asp-for="Type" class="form-label">Type</label>
                         <select asp-for="Type" class="form-select">
                             <option value="1">Fruit</option>
                             <option value="2">Vegetable</option>
                             <option value="3">Dairy</option>
                         </select>
+                        <span asp-validation-for="Type" class="text-danger"></span>
                     </div>
                     <div>
                         <button type="submit" class="btn btn-primary float-end">Save</button>

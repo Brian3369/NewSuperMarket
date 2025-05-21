@@ -1,40 +1,46 @@
-﻿using Application.ViewModel;
+﻿using Application.Dtos;
+using Application.Service;
+using Application.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace NewSuperMarket.Controllers
 {
     public class MarketController : Controller
     {
+        private readonly ProductService productService
+        public MarketController()
+        {
+            productService = new ProductService();
+        }
         public IActionResult Index()
         {
-            List<ProductViewModel> productsFruit = new() 
-            { 
-                new ProductViewModel { Name = "Fresa", Descripcion = "1 libra", Price = 10.10, Type = 1 },
-                new ProductViewModel { Name = "Zanahoria", Descripcion = "1 zanahoria", Price = 2.00, Type = 2 },
-                new ProductViewModel { Name = "Queso", Descripcion = "Paquete 200 rebanadas", Price = 20.00, Type = 3 }
-            };
+            ProductListDto productListDto = productService.GetAll();
 
-            List<ProductViewModel> productsVegetable = new()
+            ProductListViewModel productListModel = new()
             {
-                new ProductViewModel { Name = "Fresa", Descripcion = "1 libra", Price = 10.10, Type = 1 },
-                new ProductViewModel { Name = "Zanahoria", Descripcion = "1 zanahoria", Price = 2.00, Type = 2 },
-                new ProductViewModel { Name = "Queso", Descripcion = "Paquete 200 rebanadas", Price = 20.00, Type = 3 }
+                Fruit = productListDto.Fruit.Select(s => new ProductViewModel()
+                {
+                    Name = s.Name,
+                    Price = s.Price,
+                    Descripcion = s.Descripcion,
+                    Type = s.Type
+                }).ToList(),
+                Vegetables = productListDto.Vegetables.Select(s => new ProductViewModel()
+                {
+                    Name = s.Name,
+                    Price = s.Price,
+                    Descripcion = s.Descripcion,
+                    Type = s.Type
+                }).ToList(),
+                Dairy = productListDto.Dairy.Select(s => new ProductViewModel()
+                {
+                    Name = s.Name,
+                    Price = s.Price,
+                    Descripcion = s.Descripcion,
+                    Type = s.Type
+                }).ToList()
             };
-
-            List<ProductViewModel> productsDairy = new()
-            {
-                new ProductViewModel { Name = "Fresa", Descripcion = "1 libra", Price = 10.10, Type = 1 },
-                new ProductViewModel { Name = "Zanahoria", Descripcion = "1 zanahoria", Price = 2.00, Type = 2 },
-                new ProductViewModel { Name = "Queso", Descripcion = "Paquete 200 rebanadas", Price = 20.00, Type = 3 }
-            };
-
-            ProductListViewModel productList = new ProductListViewModel
-            {
-                Fruit = productsFruit,
-                Vegetables = productsVegetable,
-                Dairy = productsDairy
-            };
-            return View(productList);
+            return View(productListModel);
         }
 
         public IActionResult AddProduct()
@@ -45,11 +51,18 @@ namespace NewSuperMarket.Controllers
         [HttpPost]
         public IActionResult AddProduct(AddProductViewModel product)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            productService.AddProduct(new ProductDto()
+            {
+                Name = product.Name,
+                Price = product.Price,
+                Descripcion = product.Descripcion,
+                Type = product.Type
+            });
             return View();
         }
-        //public IActionResult AddProduct(string Name, double Price, string Descripcion, int Type)
-        //{
-        //    return View();
-        //}
     }
 }
