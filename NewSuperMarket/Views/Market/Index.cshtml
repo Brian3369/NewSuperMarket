@@ -1,0 +1,130 @@
+﻿@model Application.ViewModel.ProductListViewModel
+
+@{
+    ViewData["Title"] = "Market";
+}
+<div>
+    <h1 class="text-center">Product list</h1>
+</div>
+
+<div class="row">
+    <div class="cowl-12 col-md-4">
+        <div class="card">
+            <div class="card-header bg-danger text-light">
+                <h5 class="text-center">Fruit</h5>
+            </div>
+        </div>
+        <div class="card-body">
+            @if (Model.Fruit.Count == 0)
+            {
+                <h3>No hay productos que mostrar</h3>
+            }
+            else
+            {
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Descripcion</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                    <tbody>
+                @foreach (var product in Model.Fruit)
+                {
+                    <tr>
+                        <td>@product.Name</td>
+                        <td>@product.Price</td>
+                        <td>@product.Descripcion</td>
+                        <td>@product.Type</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+            }
+        </div>
+    </div>
+    <div class="cowl-12 col-md-4">
+        <div class="card">
+            <div class="card-header bg-warning text-light">
+                <h5 class="text-center">Vegetable</h5>
+            </div>
+        </div>
+        <div class="card-body">
+            @if (Model.Vegetables.Count == 0)
+            {
+                <h3>No hay productos que mostrar</h3>
+            }
+            else
+            {
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Descripcion</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Model.Vegetables)
+                    {
+                        <tr>
+                            <td>@product.Name</td>
+                            <td>@product.Price</td>
+                            <td>@product.Descripcion</td>
+                            <td>@product.Type</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            }
+        </div>
+    </div>
+    <div class="cowl-12 col-md-4">
+        <div class="card">
+            <div class="card-header bg-success text-light">
+                <h5 class="text-center">Dairy</h5>
+            </div>
+        </div>
+        <div class="card-body">
+            @if (Model.Dairy.Count == 0)
+            {
+                <h3>No hay productos que mostrar</h3>
+            }
+            else
+            {
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Descripcion</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Model.Dairy)
+                    {
+                        <tr>
+                            <td>@product.Name</td>
+                            <td>@product.Price</td>
+                            <td>@product.Descripcion</td>
+                            <td>@product.Type</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            }
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/Market/market_index_Style.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    <script src="~/js/Market/market_index.js" asp-append-version="true"></script>
+}
