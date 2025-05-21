@@ -1,31 +1,24 @@
 ﻿using Application.ViewModel;
 using Application.Dtos;
+using Application.Repositories;
+using Application.Enum;
 
 namespace Application.Service
 {
     public class ProductService
     {
-        public ProductListDto productList { get; set; }
-        public ProductService() { 
-            productList = new() {
-                Fruit = new(),
-                Vegetables = new(),
-                Dairy = new()
-            };
-        }
-
         public void AddProduct(ProductDto product)
         {
             switch (product.Type)
             {
-                case 1:
-                    productList.Fruit.Add(product);
+                case (int)ProductType.Fruit:
+                    ProductRepository.Instance.ProductList.Fruit.Add(product);
                     break;
-                case 2:
-                    productList.Vegetables.Add(product);
+                case (int)ProductType.Vegetables:
+                    ProductRepository.Instance.ProductList.Vegetables.Add(product);
                     break;
-                case 3:
-                    productList.Dairy.Add(product);
+                case (int)ProductType.Dairy:
+                    ProductRepository.Instance.ProductList.Dairy.Add(product);
                     break;
                 default:
                     throw new ArgumentException("Invalid product type");
@@ -34,7 +27,7 @@ namespace Application.Service
 
         public ProductListDto GetAll()
         {
-            return productList;
+            return ProductRepository.Instance.ProductList;
         }
     }
 }

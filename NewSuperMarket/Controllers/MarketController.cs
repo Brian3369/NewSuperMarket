@@ -7,7 +7,7 @@ namespace NewSuperMarket.Controllers
 {
     public class MarketController : Controller
     {
-        private readonly ProductService productService
+        private readonly ProductService productService;
         public MarketController()
         {
             productService = new ProductService();
@@ -62,7 +62,7 @@ namespace NewSuperMarket.Controllers
                 Descripcion = product.Descripcion,
                 Type = product.Type
             });
-            return View();
+            return RedirectToRoute(new {controller="Market", action="Index"});
         }
     }
 }
